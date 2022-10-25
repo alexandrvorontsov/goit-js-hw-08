@@ -6,8 +6,7 @@ const formData = {};
 
 form.addEventListener('input', throttle(onFormData, 500));
 form.addEventListener('submit', onFormSubmit);
-const data = getStorageData();
-updateFormData(data);
+initForm(getFormData());
 
 function onFormData(e) {
   formData[e.target.name] = e.target.value;
@@ -20,14 +19,14 @@ function onFormSubmit(evt) {
   localStorage.removeItem(STORAGE_KEY);
 }
 
-function getStorageData() {
+function getFormData() {
   return JSON.parse(localStorage.getItem(STORAGE_KEY));
 }
 
-function updateFormData(data) {
+function initForm(data) {
   if (data) {
-    for (const key in data) {
-      form.elements[key].value = data[key];
-    }
+    Object.entries(data).forEach(([key, value]) => {
+      form.elements[key].value = value;
+    });
   }
 }
