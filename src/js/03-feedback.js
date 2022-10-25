@@ -2,7 +2,7 @@ import throttle from 'lodash.throttle';
 
 const STORAGE_KEY = 'feedback-form-state';
 const form = document.querySelector('.feedback-form');
-const formData = {};
+let formData = {};
 
 form.addEventListener('input', throttle(onFormData, 500));
 form.addEventListener('submit', onFormSubmit);
@@ -28,5 +28,6 @@ function initForm(data) {
     Object.entries(data).forEach(([key, value]) => {
       form.elements[key].value = value;
     });
+    formData = data;
   }
 }
