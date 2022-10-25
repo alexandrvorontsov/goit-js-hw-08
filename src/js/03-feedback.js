@@ -6,7 +6,8 @@ const formData = {};
 
 form.addEventListener('input', throttle(onFormData, 500));
 form.addEventListener('submit', onFormSubmit);
-dataLocalStorage();
+const data = getStorageData();
+updateFormData(data);
 
 function onFormData(e) {
   formData[e.target.name] = e.target.value;
@@ -19,8 +20,11 @@ function onFormSubmit(evt) {
   localStorage.removeItem(STORAGE_KEY);
 }
 
-function dataLocalStorage() {
-  const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+function getStorageData() {
+  return JSON.parse(localStorage.getItem(STORAGE_KEY));
+}
+
+function updateFormData(data) {
   if (data) {
     for (const key in data) {
       form.elements[key].value = data[key];
